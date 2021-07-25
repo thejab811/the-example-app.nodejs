@@ -1,0 +1,31 @@
+pool:
+ vmImage: 'ubuntu-20.04'
+
+variables:
+ CurrentYear: '20'
+ CurrentReleaseNum: '1'
+ # Flavour 0 for Azure and 1 for on-premise
+ Platform: '0'
+ Version: '0'
+ # the name of an Azure artifacts feed
+ azureSubscription: XXXXXXXXXXXXYour subscription Name XXXXXXXXXXXXX
+ dockerContainerRegistry: XXXXXXXXXXXXXXContainer redistry name(dockerhub)XXXXXXXXXXXX
+ imageName: Nodejsapp
+ imageTag: '$(releaseVersion)'
+
+steps:
+
+
+- bash: |
+  # Write your commands here
+ 
+  ls -ltr
+ 
+  echo "build started"
+  docker build --build-arg 'INDEX_URL=$(PIP_EXTRA_INDEX_URL)' -t $(dockerContainerRegistry)/$(imageName):$(imageTag) -t $(dockerContainerRegistry)/$(imageName):$(imageTag) .
+ 
+  echo "build completed"
+ 
+  docker images
+ 
+  docker push $(dockerContainerRegistry)/$(imageName):$(imageTag)
